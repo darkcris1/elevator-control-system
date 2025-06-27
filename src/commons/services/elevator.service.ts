@@ -79,16 +79,6 @@ export class ElevatorControlSystemService {
   }
 
   public requestElevator(floor: number, destination: number, direction: 'up' | 'down'): void {
-    // Check for duplicate requests
-    const existingRequest = this.pendingRequests.find(
-      r => r.floor === floor && r.destination === destination && r.direction === direction
-    );
-
-    if (existingRequest) {
-      this.log(`Ignoring duplicate ${direction.toUpperCase()} request from floor ${floor} to floor ${destination}`, 'status');
-      return;
-    }
-
     const request: ElevatorRequest = {
       floor,
       destination,
@@ -102,6 +92,7 @@ export class ElevatorControlSystemService {
 
     // Find best elevator for this request
     const bestElevator = this.findBestElevator(request);
+
     if (bestElevator) {
       this.assignRequest(bestElevator, request);
     }
@@ -306,7 +297,7 @@ export class ElevatorControlSystemService {
     elevator.isMoving = false;
 
     // Simulate passenger exchange
-    elevator.currentMoving = setTimeout(() => {
+    elevator.currentMoving = window.setTimeout(() => {
       elevator.isDoorOpen = false;
       this.log(`Elevator ${elevator.id} doors closed at floor ${elevator.currentFloor}`, 'movement', this.IDLE);
       
@@ -335,7 +326,7 @@ export class ElevatorControlSystemService {
     this.log(`Elevator ${elevator.id} moving ${elevator.direction} from floor ${elevator.currentFloor}`, 'movement', elevator.direction);
 
     // Simulate movement
-    elevator.currentMoving = setTimeout(() => {
+    elevator.currentMoving = window.setTimeout(() => {
       elevator.currentFloor += elevator.direction === this.UP ? 1 : -1;
       elevator.isMoving = false;
 

@@ -1,0 +1,59 @@
+// tsconfig.spec.json
+{
+  // If your root tsconfig.json is purely for 'references' and has no 'compilerOptions',
+  // you can consider removing 'extends' here, or ensure 'tsconfig.base.json'
+  // exists and explicitly defines the core compilerOptions that are inherited.
+  // For now, let's keep it if you intend to share some root-level config.
+  "extends": "./tsconfig.json", // This will cause it to inherit any compilerOptions from tsconfig.json if it had them.
+                                // If tsconfig.json only has 'references', it won't inherit anything.
+
+  "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.spec.tsbuildinfo",
+
+  "compilerOptions": {
+    "noEmit": true, // Do not emit JS files
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Standard libs for browser-like testing
+    "jsx": "react-jsx", // Enable JSX support
+
+    // --- CRITICAL FOR MODULE RESOLUTION AND MODERN SYNTAX ---
+    "target": "ES2020", // Ensure modern JS features (like private identifiers from happy-dom) are understood
+    "module": "ESNext", // Use modern ES module syntax
+    "moduleResolution": "bundler", // Vitest/Vite-friendly module resolution strategy
+    // --- END CRITICAL ---
+
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enables better interoperability for default imports
+    "isolatedModules": true, // Necessary if you're using `ts-loader` or similar transpilers
+    "skipLibCheck": true, // <--- Add or ensure this is true: Skips type checking of declaration files.
+                          // This can help with issues originating from node_modules, like happy-dom errors.
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true, // Allow `.ts` extensions in imports
+    "moduleDetection": "force", // Force TypeScript to treat files as modules
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true, // Linting rule
+
+    "baseUrl": "./", // Base URL for resolving non-relative module names
+    "paths": {
+      "@/*": ["src/*"] // Your path aliases
+    },
+    "types": [
+      "vitest/globals",           // Types for Vitest global test APIs (describe, it, expect, vi)
+      "@testing-library/jest-dom" // Types for @testing-library/jest-dom matchers
+    ]
+  },
+  "include": [
+    // Ensure these patterns accurately cover your test files and setup file
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "test/**/*.ts", // If you place tests in a top-level 'test' directory
+    "test/**/*.tsx",
+    "test/setup-test.ts" // <--- Confirm this exact path for your setup file
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

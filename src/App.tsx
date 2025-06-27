@@ -30,7 +30,7 @@ function App() {
     setElevatorSystem(system);
 
     // Start simulation
-    const simulationInterval = setInterval(() => {
+    const simulationInterval = window.setInterval(() => {
       system.simulateStep();
     }, 1000);
     intervalRef.current = simulationInterval
@@ -81,9 +81,9 @@ function App() {
 
             <Button
               onClick={handleManualRequest}
+              id='request-elevator'
               >
               Request Elevator (Random Floor and destination)
-
             </Button>
           </div>
         </section>
@@ -98,7 +98,7 @@ function App() {
           <h2 className='text-xl font-semibold mb-4'>Logs</h2>
           <div className='space-y-1 grow overflow-auto max-h-full pb-2'>
             {logs.map((log) => (
-              <article key={log.id} className='p-2 border-b border-gray-100 text-xs'>
+              <article key={log.id} className='app-log p-2 border-b border-gray-100 text-xs'>
                 <div className='flex justify-between items-start'>
                   <span className={`font-medium ${getLogTypeColor(log)}`}>
                     {log.message}

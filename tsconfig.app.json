@@ -29,5 +29,10 @@
     },
     "types": ["react", "react-dom"] // Specify only the types you need for a browser environment
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "test/**/*.ts", 
+    "test/**/*.tsx",
+    "test/setup-test.ts"
+  ]
 }

@@ -40,7 +40,7 @@ export default function BuildingVisualization({
                   return (
                     <article
                       key={`elevator-${elevator.id}-floor-${floor.id}`}
-                      className={`w-8 relative h-8 rounded border-2 flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                      className={`app-elevator w-8 relative h-8 rounded border-2 flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                         isOnFloor
                           ? elevator.direction === elevatorSystem.UP
                             ? 'bg-green-500 border-green-600 text-white animate-pulse'

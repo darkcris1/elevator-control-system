@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+/coverage/
+
+# Vitest snapshot files (if you're using snapshot testing)
+__snapshots__/
+
+# Vitest cache directory (usually in node_modules)
+.vitest-cache/
+*.tsbuildinfo
